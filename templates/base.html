@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Coach Personnel{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+
+                {% if user.is_authenticated %}
+                    <li><a href="#dashboard">Mon espace</a></li>
+                    <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Connexion</a></li>
+                    <li><a href="#signup">Inscription</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Contenu spécifique à chaque page -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Coach en développement personnel</p>
+    </footer>
+
+</body>
+</html>
