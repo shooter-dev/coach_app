@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm
 
+
 def signup_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -11,4 +12,5 @@ def signup_view(request):
             return redirect('dashboard')
     else:
         form = CustomUserCreationForm()
+        
     return render(request, 'accounts/signup.html', {'form': form})
