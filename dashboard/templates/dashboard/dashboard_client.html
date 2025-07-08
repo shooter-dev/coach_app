@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Mes Rendez-vous ...</h2>
+  {% if seances %}
+    <ul>
+      {% for s in seances %}
+        <li>
+          {{ s.date }} à {{ s.heure }} – {{ s.objet }}<br>
+          Note : {{ s.note|default:"Aucune note" }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Pas de rendez-vous à venir.</p>
+  {% endif %}
+{% endblock %}

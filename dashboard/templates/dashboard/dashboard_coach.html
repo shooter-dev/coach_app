@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Coach{% endblock %}
+
+{% block content %}
+<h2>Mon calendrier de rendez-vous</h2>
+<div id="calendar"></div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet" />
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'fr',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek'
+      },
+      events: [
+        // Données fictives pour test
+        {
+          title: 'Alice – Coaching pro',
+          start: '2025-07-10T10:00:00'
+        },
+        {
+          title: 'Bob – Gestion du stress',
+          start: '2025-07-15T14:00:00'
+        },
+        {
+          title: 'Claire – Objectifs de vie',
+          start: '2025-07-20T11:30:00'
+        }
+      ]
+    });
+
+    calendar.render();
+  });
+</script>
+{% endblock %}
+<!-- Modal Bootstrap -->
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventModalLabel">Détail du rendez-vous</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Titre :</strong> <span id="modalTitle"></span></p>
+        <p><strong>Date et heure :</strong> <span id="modalDateTime"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <!-- Plus tard : bouton Modifier / Supprimer -->
+      </div>
+    </div>
+  </div>
+</div>
