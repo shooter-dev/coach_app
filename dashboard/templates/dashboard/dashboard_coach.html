@@ -1,66 +1,77 @@
 {% extends 'base.html' %}
-{% block title %}Dashboard Coach{% endblock %}
-
 {% block content %}
-<h2>Mon calendrier de rendez-vous</h2>
-<div id="calendar"></div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <a class="btn btn-outline-secondary" href="?month={{ prev_month }}&year={{ prev_year }}">← Mois précédent</a>
+  <h2 class="text-center m-0">{{ month_name }} {{ year }}</h2>
+  <a class="btn btn-outline-secondary" href="?month={{ next_month }}&year={{ next_year }}">Mois suivant →</a>
+</div>
+<div class="calendar-container">
+  <div class="calendar-header">
+{% for day in day_names %}
+      <div class="calendar-day-name">{{ day }}</div>
+    {% endfor %}
+  </div>
+
+  <div class="calendar-grid">
+    {% for day in calendar_data %}
+      <div class="calendar-cell {% if not day.current_month %}inactive{% endif %}">
+        <div class="cell-date">{{ day.date.day }}</div>
+
+        {% for booking in day.bookings %}
+          <div class="booking">
+            <strong>{{ booking.heure_debut|time:"H:i" }}</strong><br>
+            {{ booking.client.username }}<br>
+            <small>{{ booking.objet }}</small>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
-<!-- FullCalendar CSS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet" />
-<!-- FullCalendar JS -->
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const calendarEl = document.getElementById('calendar');
-
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      locale: 'fr',
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek'
-      },
-      events: [
-        // Données fictives pour test
-        {
-          title: 'Alice – Coaching pro',
-          start: '2025-07-10T10:00:00'
-        },
-        {
-          title: 'Bob – Gestion du stress',
-          start: '2025-07-15T14:00:00'
-        },
-        {
-          title: 'Claire – Objectifs de vie',
-          start: '2025-07-20T11:30:00'
-        }
-      ]
-    });
-
-    calendar.render();
-  });
-</script>
+<style>
+.calendar-container {
+  max-width: 1000px;
+  margin: auto;
+}
+.calendar-header, .calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.calendar-day-name {
+  background: #343a40;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #dee2e6;
+}
+.calendar-cell {
+  border: 1px solid #dee2e6;
+  min-height: 120px;
+  padding: 5px;
+  position: relative;
+  background-color: #fff;
+}
+.calendar-cell.inactive {
+  background-color: #f8f9fa;
+  color: #aaa;
+}
+.cell-date {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.booking {
+  background-color: #d1e7dd;
+  border-left: 4px solid #0f5132;
+  padding: 3px;
+  margin-bottom: 5px;
+  font-size: 0.85em;
+  border-radius: 4px;
+}
+</style>
 {% endblock %}
-<!-- Modal Bootstrap -->
-<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventModalLabel">Détail du rendez-vous</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Titre :</strong> <span id="modalTitle"></span></p>
-        <p><strong>Date et heure :</strong> <span id="modalDateTime"></span></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <!-- Plus tard : bouton Modifier / Supprimer -->
-      </div>
-    </div>
-  </div>
-</div>
