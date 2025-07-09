@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from coachapp.views import info_view
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
+    path('info/', info_view, name='info'),
     path('dashboard/', include('dashboard.urls')),
 ]
