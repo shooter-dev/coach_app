@@ -136,13 +136,12 @@ Ce projet repose sur un environnement Python/Django moderne, renforcé par un ou
 (Makefile) pour simplifier les tâches en ligne de commande.
 
 ### 🧰 Technologies principales
-Composant	Description
-Python 3.12	Langage principal du backend
-Django 5.x	Framework web complet pour la gestion des vues, modèles, templates, etc.
-SQLite3	Base de données légère, intégrée par défaut
-Bootstrap 5	(Optionnel) Pour le design responsive et moderne
-HTML5 / CSS3	Création des interfaces utilisateur
-Makefile	Automatisation des commandes courantes (run, migrate, etc.)
+- Python 3.12	Langage principal du backend
+- Django 5.x	Framework web complet pour la gestion des vues, modèles, templates, etc.
+- SQLite3	Base de données légère, intégrée par défaut
+- Bootstrap 5	(Optionnel) Pour le design responsive et moderne
+- HTML5 / CSS3	Création des interfaces utilisateur
+- Makefile	Automatisation des commandes courantes (run, migrate, etc.)
 ### 📦 Dépendances Python (extrait du requirements.txt)
 - Django>=5.0
 ### ⚙️ Commandes automatisées via Makefile
