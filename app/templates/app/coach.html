@@ -1,10 +1,101 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Présentation du coach</h2>
-<p>Je suis un coach passionné par le développement personnel depuis plus de 10 ans.</p>
-<p>Mon approche est basée sur l’écoute, la bienveillance et des outils concrets adaptés à chaque profil.</p>
-<p>Mon objectif : vous aider à atteindre votre plein potentiel.</p>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Infos société -->
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="card-title">Informations de la société</h2>
+          <p><strong>Nom :</strong> Coach Alex Louis Armstrong</p>
+          <p><strong>Adresse :</strong> 123 Rue de la Réussite, 75000 Paris</p>
+          <p><strong>SIRET :</strong> 123 456 789 00010</p>
+          <p><strong>Email :</strong> contact@coachenvol.fr</p>
+          <p><strong>Téléphone :</strong> +33 6 12 34 56 78</p>
+        </div>
+      </div>
+    </div>
 
-<a href="{% url 'home' %}">Retour à l’accueil</a>
+    <!-- Biographie théâtrale du coach -->
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <img src="{% static 'images/coach.webp' %}"
+             alt="Logo Coach Personnel"
+             class="border border-primary mb-3"
+             style="height: 220px; width: 220px; border-radius: 50%; object-fit: cover;">
+          <h2 class="card-title">Maître Alex Louis Armstrong</h2>
+          <p class="fw-bold fst-italic">Coach et Major au cœur tendre et aux muscles saillants</p>
+          <p>
+            Sa sagesse a été transmise de génération en génération, <strong>sculptée à mains nues dans le marbre de la discipline</strong> !
+            Né dans le feu de la persévérance, Alex Louis Armstrong a dédié sa vie à aider autrui à atteindre l’illumination intérieure !
+          </p>
+          <p>
+            <strong>Chaque mot qu’il prononce</strong> est chargé d’une énergie cosmique, fruit d’années de méditation intense et de postures inspirées héritées de ses maîtres spirituels et de son grand-père, le légendaire “Coach des coachs”.
+          </p>
+          <p>
+            Sa méthode est un alliage rare de rigueur martiale et de tendresse infinie !
+            Lorsqu’il vous regarde, c’est comme si <em>les étoiles elles-mêmes validaient votre potentiel</em> !
+          </p>
+          <p class="text-primary fw-bold">💪 Une simple poignée de main avec lui a déjà transformé des vies ! 💫</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="avis-coach-armstrong" style="max-width:800px; margin:2rem auto; font-family: Arial, sans-serif;">
+
+  <h2 style="text-align:center; margin-bottom:1.5rem; color:#1a1a1a;">Avis des utilisateurs – Coach Alex Louis Armstrong</h2>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#d35400;">Edward Elric <span style="color:#f39c12;">★★★★★</span></h3>
+    <p>J’étais venu pour un programme de musculation... Je repars avec une surcharge émotionnelle ! Armstrong m’a fait faire 300 pompes en hurlant que j’étais comme un petit frère pour lui. Je ne sais pas si j’ai pris des biceps, mais j’ai pris de la confiance. Sauf qu’il me serre trop fort dans ses bras.</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#27ae60;">Winry Rockbell <span style="color:#27ae60;">★★★★★</span></h3>
+    <p>J’ai demandé un programme pour les bras… il m’a proposé de forger un haltère avec mes émotions. Très bizarre, mais j’ai rarement vu quelqu’un d’aussi attentionné. Il m’a même offert une serviette brodée ‘Famille Armstrong’. Touchant et efficace !</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#2980b9;">Alphonse Elric <span style="color:#2980b9;">★★★★★</span></h3>
+    <p>Coach Armstrong est incroyablement gentil. Même si je n’ai pas de muscles visibles, il m’a dit que mon cœur était plus fort que n’importe quel biceps. On a médité après chaque séance. Résultat : je me sens vivant !</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#c0392b;">Roy Mustang <span style="color:#c0392b;">★★★☆☆</span></h3>
+    <p>L’homme est... intense. Très intense. Il m’a poursuivi dans le parc pour que je tienne mes squats. J’ai dû brûler son planning hebdomadaire pour éviter une séance “transmise depuis des générations.” Je recommande, mais uniquement aux braves.</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#8e44ad;">Riza Hawkeye <span style="color:#8e44ad;">★★★★☆</span></h3>
+    <p>Très respectueux. Très émotif. M’a donné un programme structuré, avec des commentaires manuscrits... en calligraphie dorée. Un peu trop de démonstrations pectorales, mais un cœur en or.</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#34495e;">Olivier Mira Armstrong <span style="color:#34495e;">★★★★★</span></h3>
+    <p>Si vous êtes trop faible pour survivre à son programme, vous ne méritez pas de progresser. Il a peut-être des manières larmoyantes, mais je l’ai vu soulever un tank. Et moi. En même temps.</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#16a085;">Sheska <span style="color:#16a085;">★★★★★</span></h3>
+    <p>Il m’a aidée à sortir de mes livres et à faire du gainage… pendant que je lisais. Oui. Il m’a appris à faire des pompes en retenant des paragraphes. Il m’a dit : ‘La force du savoir se sculpte aussi avec des haltères !’ Incroyable.</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#f39c12;">Gluttony <span style="color:#f39c12;">★★★★★</span></h3>
+    <p>Coach Armstrong m’a dit que pour mieux manger, il fallait mieux bouger. Maintenant je cours 10 kilomètres par jour avant chaque repas ! Il pleure à chaque fois que je finis une séance... et puis il me donne un smoothie aux légumes “préparé avec amour et protéines”. Je l’aime bien. Mais j’ai toujours faim.</p>
+  </article>
+
+  <article style="border:1px solid #ddd; border-radius:8px; padding:1rem; margin-bottom:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+    <h3 style="color:#7f8c8d;">Scar <span style="color:#7f8c8d;">★★★☆☆</span></h3>
+    <p>Je ne suis pas là pour sculpter mon corps, mais pour racheter mes fautes. Cependant, Armstrong… m’a rappelé que la force ne devait pas servir la vengeance, mais la protection. Je fais ses exercices en silence. Et je médite après. Il parle trop. Mais il est... honnête.</p>
+  </article>
+
+</section>
+
+
 {% endblock %}
