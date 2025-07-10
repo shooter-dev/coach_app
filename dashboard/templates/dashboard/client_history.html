@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>📖 Historique de mes séances</h2>
+<ul>
+  {% for rdv in appointments %}
+    <li>{{ rdv.date }} - Notes : {{ rdv.note|default:"Aucune note" }}</li>
+  {% empty %}
+    <li>Pas d'historique encore.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

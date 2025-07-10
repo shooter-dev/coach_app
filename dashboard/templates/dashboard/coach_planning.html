@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>📅 Planning des clients</h2>
+<ul>
+  {% for rdv in appointments %}
+    <li>{{ rdv.date }} avec {{ rdv.user.username }}</li>
+  {% empty %}
+    <li>Pas de rendez-vous prévu.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
