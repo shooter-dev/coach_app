@@ -36,9 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'dashboard',
-    'booking',
 ]
 
 MIDDLEWARE = [
@@ -123,8 +120,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+#AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/dashboard/client/'  # ou dynamique selon rôle
-LOGOUT_REDIRECT_URL = '/'
+#LOGIN_URL = '/login/'
+#LOGIN_REDIRECT_URL = '/dashboard/client/'  # ou dynamique selon rôle
+#LOGOUT_REDIRECT_URL = '/'
