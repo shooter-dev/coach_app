@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <h1 class="mb-4">Bienvenue chez votre coach personnel</h1>
+  <p>Réservez vos séances de coaching en toute simplicité.</p>
+
+  {% if user.is_authenticated %}
+    <p>Bonjour {{ user.username }} !</p>
+
+    {% if user.groups.first.name == "Client" %}
+      <a href="{% url 'add_booking' %}" class="btn btn-success btn-lg mt-3">
+        📅 Prendre un rendez-vous
+      </a>
+    {% endif %}
+
+  {% else %}
+    <a href="{% url 'signup' %}" class="btn btn-primary mt-3">Créer un compte</a>
+    <a href="{% url 'login' %}" class="btn btn-outline-secondary mt-3">Se connecter</a>
+  {% endif %}
+</div>
+{% endblock %}

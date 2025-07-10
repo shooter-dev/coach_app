@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Prendre un rendez-vous{% endblock %}
+
+{% block content %}
+<h2>📅 Prendre un rendez-vous</h2>
+<form method="post">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label for="date">Date :</label>
+    <input type="date" id="date" name="date" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="hour">Créneau horaire disponible :</label>
+    <select id="hour" name="hour" class="form-select" required>
+      <option value="">-- Choisissez une date --</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-success">Valider</button>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById("date").addEventListener("change", function() {
+  const selectedDate = this.value;
+  const hourSelect = document.getElementById("hour");
+  hourSelect.innerHTML = '<option>Chargement...</option>';
+
+  fetch(`/booking/available_hours?date=${selectedDate}`)
+    .then(response => response.json())
+    .then(data => {
+      hourSelect.innerHTML = "";
+      if (data.slots.length === 0) {
+        hourSelect.innerHTML = '<option>Aucun créneau disponible</option>';
+        return;
+      }
+      data.slots.forEach(hour => {
+        const option = document.createElement("option");
+        option.value = hour;
+        option.textContent = hour;
+        hourSelect.appendChild(option);
+      });
+    });
+});
+</script>
+{% endblock %}

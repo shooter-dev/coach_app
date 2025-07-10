@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import dashboard_client_view, dashboard_coach_view
+from . import views
 
 urlpatterns = [
-    path('client/', dashboard_client_view, name='dashboard_client'),
-    path('coach/', dashboard_coach_view, name='dashboard_coach'),
+    path("client/planning", views.client_planning, name="client_planning"),
+    path("client/history", views.client_history, name="client_history"),
+    path("coach/planning", views.coach_planning, name="coach_planning"),
+    path("coach/horaire", views.coach_availability, name="coach_availability"),
 ]

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Disponibilités du coach{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="mt-4">🕒 Indiquez vos heures de travail</h2>
+  <p class="text-muted">Cochez les créneaux disponibles dans la semaine.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="table-responsive">
+      <table class="table table-bordered text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Heure / Jour</th>
+            {% for day in days %}
+              <th>{{ day }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for hour in hours %}
+          <tr>
+            <td><strong>{{ hour }}</strong></td>
+            {% for day in days %}
+              {% with key=day|add:"|"|add:hour %}
+              <td>
+                <input type="checkbox" name="availability" value="{{ key }}"
+                {% if key in selected_slots %}checked{% endif %}>
+              </td>
+              {% endwith %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+  </form>
+
+  <a href="{% url 'coach_planning' %}" class="btn btn-outline-secondary mt-3">← Retour au planning</a>
+</div>
+{% endblock %}

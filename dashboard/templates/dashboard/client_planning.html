@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>📅 Prendre rendez-vous</h2>
+<p>Choisissez un créneau disponible :</p>
+
+<ul>
+  {% for dispo in availability %}
+    {% if dispo|date:"Y-m-d H:i" not in used_dates %}
+      <li>
+        <a href="{% url 'add_appointment' %}?date={{ dispo.day }}T{{ dispo.hour }}">{{ dispo.day }} à {{ dispo.hour }}</a>
+      </li>
+    {% endif %}
+  {% empty %}
+    <li>Aucune disponibilité actuellement.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

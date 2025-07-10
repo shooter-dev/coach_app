@@ -1,18 +1,26 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-from coachapp import settings
 
-
-class Booking(models.Model):  # ou Booking
-    date = models.DateField()
-    heure_debut = models.TimeField()
-    client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    objet = models.CharField(max_length=255)
-    note_coach = models.TextField(blank=True, null=True)
+class Availability(models.Model):
+    day_name = models.CharField(max_length=10)  # ex: 'Lundi'
+    hour = models.TimeField()
 
     class Meta:
-        unique_together = ('date', 'heure_debut')  # pas de double réservation
+        unique_together = ("day_name", "hour")
+        ordering = ["day_name", "hour"]
 
     def __str__(self):
-        return f"{self.date} {self.heure_debut} – {self.client.username}"
+        return f"{self.day_name} à {self.hour}"
 
+class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    note = models.TextField(blank=True, null=True)  # Notes coach uniquement
+
+    class Meta:
+        unique_together = ('date',)
+        ordering = ['date']
+
+    def __str__(self):
+        return f"RDV de {self.user.username} le {self.date}"

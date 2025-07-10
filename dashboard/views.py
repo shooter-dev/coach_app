@@ -1,80 +1,60 @@
-from django.contrib.auth.decorators import login_required
+# dashboard/views.py
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
-from django.utils import timezone
-import calendar
-from booking.models import Booking
+from django.utils.timezone import now
+from django.utils.dateparse import parse_time
+from django.contrib import messages
+
+from booking.models import Booking, Availability
+
+
+def is_client(user):
+    return user.groups.filter(name="Client").exists()
+
+def is_coach(user):
+    return user.groups.filter(name="Coach").exists()
+
+@login_required
+@user_passes_test(is_client)
+def client_planning(request):
+    upcoming = Booking.objects.filter(user=request.user, date__gte=now()).order_by("date")
+    return render(request, "dashboard/client_planning.html", {"appointments": upcoming})
+
+@login_required
+@user_passes_test(is_client)
+def client_history(request):
+    past = Booking.objects.filter(user=request.user, date__lt=now()).order_by("-date")
+    return render(request, "dashboard/client_history.html", {"appointments": past})
+
+@login_required
+@user_passes_test(is_coach)
+def coach_planning(request):
+    all_appointments = Booking.objects.select_related("user").order_by("date")
+    return render(request, "dashboard/coach_planning.html", {"appointments": all_appointments})
 
 
 @login_required
-def dashboard_client_view(request):
-    if request.user.is_coach:
-        return redirect('dashboard_coach')
+@user_passes_test(is_coach)
+def coach_availability(request):
+    days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    hours = [f"{h:02d}:00" for h in range(8, 19)]
 
-    # Données fictives (liste de dictionnaires)
-    seances = [
-        {"date": "2025-07-10", "heure": "10:00", "objet": "Coaching motivation"},
-        {"date": "2025-07-15", "heure": "14:00", "objet": "Gestion du stress"},
-    ]
-    return render(request, 'dashboard/dashboard_client.html', {'seances': seances})
+    if request.method == "POST":
+        selected = request.POST.getlist("availability")
+        Availability.objects.all().delete()
+        for entry in selected:
+            day, hour = entry.split("|")
+            Availability.objects.get_or_create(day_name=day, hour=hour)
+        messages.success(request, "Disponibilités mises à jour.")
+        return redirect("coach_availability")
 
-@login_required
-def dashboard_coach_view(request):
-    if not request.user.is_coach:
-        return redirect('dashboard_client')
+    # Construire un set des disponibilités actuelles pour comparaison dans le template
+    selected_slots = set(
+        f"{a.day_name}|{a.hour.strftime('%H:%M')}" for a in Availability.objects.all()
+    )
 
-    # Récupération des paramètres dans l'URL
-    month = request.GET.get('month')
-    year = request.GET.get('year')
-
-    today = timezone.now().date()
-    month = int(month) if month else today.month
-    year = int(year) if year else today.year
-
-    # Gérer les dépassements d'année si nécessaire (ex: mois = 0 ou 13)
-    if month < 1:
-        month = 12
-        year -= 1
-    elif month > 12:
-        month = 1
-        year += 1
-
-    bookings = Booking.objects.all()
-    cal = calendar.Calendar(firstweekday=0)
-
-    month_days = cal.itermonthdates(year, month)
-
-    calendar_data = []
-
-    for day in month_days:
-        day_bookings = [b for b in bookings if b.date == day]
-        calendar_data.append({
-            'date': day,
-            'bookings': day_bookings,
-            'current_month': (day.month == month),
-        })
-
-    # Pour créer les liens vers les mois précédent et suivant
-    prev_month = month - 1
-    next_month = month + 1
-    prev_year = year
-    next_year = year
-
-    if prev_month < 1:
-        prev_month = 12
-        prev_year -= 1
-
-    if next_month > 12:
-        next_month = 1
-        next_year += 1
-
-    return render(request, 'dashboard/dashboard_coach.html', {
-        'calendar_data': calendar_data,
-        'month_name': calendar.month_name[month],
-        'month': month,
-        'year': year,
-        'day_names': ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"],
-        'prev_month': prev_month,
-        'prev_year': prev_year,
-        'next_month': next_month,
-        'next_year': next_year,
+    return render(request, "dashboard/coach_availability.html", {
+        "days": days,
+        "hours": hours,
+        "selected_slots": selected_slots,
     })
