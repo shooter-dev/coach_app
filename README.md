@@ -101,10 +101,14 @@ coach_app/
 │   ├── css/
 │   ├── js/
 │
-├── coach_app/           # Répertoire du projet (settings, urls, wsgi)
+├── core/           # Répertoire du projet (settings, urls, wsgi)
 │   ├── settings.py
 │   ├── urls.py
 │   ├── wsgi.py
+│
+├── app/           # Répertoire du site (urls, views)
+│   ├── urls.py
+│   ├── views.py
 │
 ├── Makefile             # Automatisation des commandes (run, migrate, test...)
 ├── manage.py
