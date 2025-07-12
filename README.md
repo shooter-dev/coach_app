@@ -2,7 +2,7 @@
 
 ![Image Coach](static/images/image_1.gif)
 
-# 🎯 Présentation du projet
+# 🎯 Présentation du projet (en cours)
 
 ---
 
